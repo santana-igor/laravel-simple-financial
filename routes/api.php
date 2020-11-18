@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\Invoice\InvoiceService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['namespace' => 'Api'], function () {
+    Route::apiResource('/invoices', 'InvoiceController');
 });
