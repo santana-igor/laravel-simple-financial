@@ -9,16 +9,15 @@ class InvoiceService extends InvoiceAbstract
 {
 
     /**
-     * Em $type é permitido apenas ['receivement', 'payment']
      *
-     * @param mixed $type
-     * @param mixed $nickname
-     * @param mixed $amount
-     * @param mixed $description
-     * @param mixed $customer_id
-     * @param mixed $category_id
-     * @param mixed $issued_at
-     * @param mixed $expired_at
+     * @param string $type Permitido apenas ['receivement', 'payment']
+     * @param integer $amount Valor da conta
+     * @param integer $customer_id ID Fornecedor/Cliente
+     * @param integer $category_id ID Categoria da conta, Ex.: Água, Energia
+     * @param Carbon $issued_at Data de emissão
+     * @param Carbon $expired_at Data de vencimento
+     * @param string $nickname Nome/Apelido para conta
+     * @param string $description Observação/Descrição
      */
     public function __construct($type, $amount, $customer_id, $category_id, $issued_at, $expired_at, $nickname, $description)
     {
