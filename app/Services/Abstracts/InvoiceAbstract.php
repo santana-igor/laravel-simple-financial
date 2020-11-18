@@ -2,7 +2,7 @@
 
 namespace App\Services\Abstracts;
 
-use DateTime;
+use Carbon\Carbon;
 
 abstract class InvoiceAbstract
 {
@@ -65,19 +65,17 @@ abstract class InvoiceAbstract
 
 
     /**
-     * @param bool $checked
      * @param string $type
      * @param string $nickname
      * @param int $amount
      * @param string $description
      * @param int $customer_id
      * @param int $category_id
-     * @param DateTime $issued_at
-     * @param DateTime $expired_at
+     * @param Carbon $issued_at
+     * @param Carbon $expired_at
      */
-    protected function __construct(bool $checked, string $type, string $nickname, int $amount, string $description, int $customer_id, int $category_id, DateTime $issued_at, DateTime $expired_at)
+    protected function __construct(string $type, int $amount, int $customer_id, int $category_id, Carbon $issued_at, Carbon $expired_at, string $nickname = null, string $description = null)
     {
-        $this->checked = $checked;
         $this->type = $type;
         $this->nickname = $nickname;
         $this->amount = $amount;
@@ -87,6 +85,8 @@ abstract class InvoiceAbstract
         $this->issued_at = $issued_at;
         $this->expired_at = $expired_at;
     }
+
+    abstract public function store();
 
     abstract public function pay($invoice_id): bool;
 
