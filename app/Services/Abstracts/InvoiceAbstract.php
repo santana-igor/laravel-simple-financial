@@ -69,7 +69,7 @@ abstract class InvoiceAbstract
     protected $issued_at;
 
     /**
-     *  Data/ Hora de vencimento
+     * Data/ Hora de vencimento
      * @var Carbon
      */
     protected $expired_at;
