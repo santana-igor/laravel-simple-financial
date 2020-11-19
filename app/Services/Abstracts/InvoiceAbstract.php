@@ -4,76 +4,11 @@ namespace App\Services\Abstracts;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\Traits\InvoiceTrait;
 
 abstract class InvoiceAbstract
 {
-
-    /**
-     * ID da conta
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * Verifica se a conta foi quitada/ dado baixa
-     * @var boolean
-     */
-    protected $checked;
-
-    /**
-     * Tipo de conta (A receber/ A pagar) - Permitido apenas ['receivement', 'payment']
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * Apelido para conta
-     * @var string
-     */
-    protected $nickname;
-
-    /**
-     * Número de referencia da conta
-     * @var string
-     */
-    protected $reference_number;
-
-    /**
-     * Valor da conta
-     * @var integer
-     */
-    protected $amount;
-
-    /**
-     * Breve descrição da conta
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * ID do Cliente/ Fornecedor (Relacionamento)
-     * @var integer
-     */
-    protected $customer_id;
-
-    /**
-     * ID da categoria (Relacionamento)
-     * @var integer
-     */
-    protected $category_id;
-
-    /**
-     * Data/ Hora de emissão
-     * @var Carbon
-     */
-    protected $issued_at;
-
-    /**
-     * Data/ Hora de vencimento
-     * @var Carbon
-     */
-    protected $expired_at;
-
+    use InvoiceTrait;
 
     /**
      * @param Request $request

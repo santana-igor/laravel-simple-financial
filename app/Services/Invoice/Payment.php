@@ -7,7 +7,7 @@ use App\Services\Abstracts\InvoiceAbstract;
 use Exception;
 use Illuminate\Http\Request;
 
-class Receivement extends InvoiceAbstract
+class Payment extends InvoiceAbstract
 {
     /**
      * @param Request $request
@@ -19,7 +19,7 @@ class Receivement extends InvoiceAbstract
 
     public function save()
     {
-        if ($this->type === 'receivement') {
+        if ($this->type === 'payment') {
             $invoice = new Invoice();
             $invoice->type = $this->type;
             $invoice->nickname = $this->nickname;
@@ -33,7 +33,7 @@ class Receivement extends InvoiceAbstract
 
             $this->id = $invoice->id;
         } else {
-            throw new Exception("Você está tentando lançar uma conta diferente do tipo de recebimento", 1);
+            throw new Exception("Você está tentando lançar uma conta diferente do tipo de pagamento", 1);
         }
     }
 

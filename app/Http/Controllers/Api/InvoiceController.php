@@ -35,7 +35,7 @@ class InvoiceController extends Controller
 
         try {
             $receivement->save();
-            return Response()->json($receivement, 200);
+            return Response()->json($receivement->getId(), 200);
         } catch (\Exception $e) {
             return Response()->json($e->getMessage(), 500);
         }
