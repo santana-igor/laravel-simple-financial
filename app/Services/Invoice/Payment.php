@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class Payment extends InvoiceAbstract
 {
-
     /**
      * @param Request $request
      */
@@ -31,6 +30,8 @@ class Payment extends InvoiceAbstract
             $invoice->issued_at = $this->issued_at;
             $invoice->expired_at = $this->expired_at;
             $invoice->save();
+
+            $this->id = $invoice->id;
         } else {
             throw new Exception("Você está tentando lançar uma conta diferente do tipo de pagamento", 1);
         }
@@ -41,6 +42,4 @@ class Payment extends InvoiceAbstract
 
     public function delete()
     {}
-
-
 }
