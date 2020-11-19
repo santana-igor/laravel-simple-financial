@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\Invoice\InvoiceService;
+use App\Services\Invoice\Receivement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
@@ -32,23 +31,14 @@ class InvoiceController extends Controller
             return Response()->json($validator->errors());
         }
 
-        $invoice = new InvoiceService(
-            $request->type,
-            $request->amount,
-            $request->customer_id,
-            $request->category_id,
-            new Carbon($request->issued_at),
-            new Carbon($request->expired_at),
-            $request->nickname,
-            $request->description,
-        );
+        $receivement = new Receivement($request);
 
-        if ($invoice->store()) {
-            return Response()->json($invoice, 200);
+        try {
+            $receivement->save();
+            return Response()->json($receivement, 200);
+        } catch (\Exception $e) {
+            return Response()->json($e->getMessage(), 500);
         }
-        return Response()->json('ocorreu erro', 500);
-
-
     }
 
     public function update(){}

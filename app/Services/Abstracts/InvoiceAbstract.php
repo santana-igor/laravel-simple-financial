@@ -3,93 +3,94 @@
 namespace App\Services\Abstracts;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 abstract class InvoiceAbstract
 {
 
     /**
+     * ID da conta
      * @var integer
      */
     protected $id;
 
     /**
+     * Verifica se a conta foi quitada/ dado baixa
      * @var boolean
      */
     protected $checked;
 
     /**
-     * Permitido apenas ['receivement', 'payment']
+     * Tipo de conta (A receber/ A pagar) - Permitido apenas ['receivement', 'payment']
      * @var string
      */
     protected $type;
 
     /**
+     * Apelido para conta
      * @var string
      */
     protected $nickname;
 
     /**
+     * Número de referencia da conta
      * @var string
      */
     protected $reference_number;
 
     /**
+     * Valor da conta
      * @var integer
      */
     protected $amount;
 
     /**
+     * Breve descrição da conta
      * @var string
      */
     protected $description;
 
     /**
+     * ID do Cliente/ Fornecedor (Relacionamento)
      * @var integer
      */
     protected $customer_id;
 
     /**
+     * ID da categoria (Relacionamento)
      * @var integer
      */
     protected $category_id;
 
     /**
-     * @var DateTime
+     * Data/ Hora de emissão
+     * @var Carbon
      */
     protected $issued_at;
 
     /**
-     * @var DateTime
+     *  Data/ Hora de vencimento
+     * @var Carbon
      */
     protected $expired_at;
 
 
     /**
-     * @param string $type
-     * @param string $nickname
-     * @param int $amount
-     * @param string $description
-     * @param int $customer_id
-     * @param int $category_id
-     * @param Carbon $issued_at
-     * @param Carbon $expired_at
+     * @param Request $request
      */
-    protected function __construct(string $type, int $amount, int $customer_id, int $category_id, Carbon $issued_at, Carbon $expired_at, string $nickname = null, string $description = null)
+    protected function __construct(Request $request)
     {
-        $this->type = $type;
-        $this->nickname = $nickname;
-        $this->amount = $amount;
-        $this->description = $description;
-        $this->customer_id = $customer_id;
-        $this->category_id = $category_id;
-        $this->issued_at = $issued_at;
-        $this->expired_at = $expired_at;
+        $this->type = $request->type;
+        $this->nickname = $request->nickname;
+        $this->amount = $request->amount;
+        $this->description = $request->description;
+        $this->customer_id = $request->customer_id;
+        $this->category_id = $request->category_id;
+        $this->issued_at = new Carbon($request->issued_at);
+        $this->expired_at = new Carbon($request->expired_at);
     }
 
-    abstract public function store();
-
-    abstract public function pay($invoice_id): bool;
-
-    abstract public function receive($invoice_id): bool;
-
+    abstract public function save();
+    abstract public function update();
+    abstract public function delete();
 }
