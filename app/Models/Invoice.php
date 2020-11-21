@@ -28,4 +28,15 @@ class Invoice extends Model
     {
         return $this->belongsTo(Category::class, 'id', 'category_id');
     }
+
+    // Scopes
+    public function scopePayable()
+    {
+        //
+    }
+
+    public function scopeReceivable()
+    {
+        //
+    }
 }

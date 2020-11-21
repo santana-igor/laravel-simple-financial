@@ -16,7 +16,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->boolean('checked')->default(false);
-            $table->enum('type', ['receivement', 'payment']);
+            $table->enum('type', ['payable', 'receivable']);
             $table->string('nickname')->nullable();
             $table->string('reference_number')->nullable();
             $table->integer('amount');
