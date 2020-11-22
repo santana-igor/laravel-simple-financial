@@ -28,7 +28,7 @@ class ClientService extends MasterClassCustomer
         }
 
         try {
-            // Criando novo fornecedor
+            // Criando novo cliente
             $this->model->type = $data['type'];
             $this->model->name = $data['name'];
             $this->model->document = $data['document'] ?? null;
