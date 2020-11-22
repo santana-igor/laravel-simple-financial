@@ -18,9 +18,7 @@ class InvoiceCategoryService extends MasterClassCategory
 
         if ($validator->fails()) {
             $notification = new NotificationService();
-            $notification->type('error');
-            $notification->message($validator->getMessageBag()->all());
-            return $notification->create();
+            return $notification->create('error', $validator->getMessageBag()->all(), 400);
         }
 
         try {
@@ -29,16 +27,11 @@ class InvoiceCategoryService extends MasterClassCategory
             $this->model->save();
 
             $notification = new NotificationService();
-            $notification->type('success');
-            $notification->message(['Cadastro efetuado com sucesso']);
-            $notification->data($this->model);
-            return $notification->create();
+            return $notification->create('success', ['Cadastro efetuado com sucesso'], 200, $this->model);
 
         } catch (\Exception $e) {
             $notification = new NotificationService();
-            $notification->type('error');
-            $notification->message([$e->getMessage()]);
-            return $notification->create();
+            return $notification->create('error', [$e->getMessage()], 500);
         }
     }
 
