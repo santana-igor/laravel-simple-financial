@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'financial'], function () {
     });
     Route::group(['namespace' => 'Customer', 'prefix' => 'customer'], function () {
         Route::apiResource('providers', 'ProviderController');
-        // Route::apiResource('clients', 'ClientController');
+        Route::apiResource('clients', 'ClientController');
     });
     Route::group(['namespace' => 'Invoice', 'prefix' => 'invoice'], function () {
         Route::apiResource('receivable', 'ReceivableController');
