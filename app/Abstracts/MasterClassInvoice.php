@@ -6,6 +6,9 @@ use App\Models\Invoice;
 
 abstract class MasterClassInvoice
 {
+    /**
+     * @var Invoice
+     */
     protected $model;
 
     public function __construct(Invoice $invoice)
