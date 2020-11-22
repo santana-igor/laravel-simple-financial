@@ -4,48 +4,13 @@ namespace App\Helpers;
 
 use App\Contracts\NotificationInterface;
 
-class NotificationService implements NotificationInterface
+class NotificationService
 {
-    private string $type;
-    private array $messages;
-    private int $status_code;
-    private $data;
-
-    final function __construct() {}
-    final function __clone() {}
-
-    /**
-     * Tipo de notificação ['error', 'success']
-     * @param array $type
-     *
-     * @return void
-     */
-    public function type(string $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * Mensagens de tratamento de erro
-     * @param array $messages
-     *
-     * @return void
-     */
-    public function message(array $messages): void
-    {
-        $this->messages = $messages;
-    }
-
-    /**
-     * Dados a mais que deseja inserir dentro da notificação
-     * @param mixed $data
-     *
-     * @return void
-     */
-    public function data($data = null): void
-    {
-        $this->data = $data;
-    }
+    private const ERROR_TYPES = [
+        "success",
+        "error",
+        "warning"
+    ];
 
     /**
      * Status Code da resposta:
@@ -54,23 +19,88 @@ class NotificationService implements NotificationInterface
      * 401 - Cliente deve se autenticar para obter a resposta solicitada.
      * 404 - O servidor não pode encontrar o recurso solicitado
      * 500 - O servidor encontrou uma situação com a qual não sabe lidar
-     *
-     * @param int $status_code
-     *
-     * @return void
      */
-    public function statusCode(int $status_code): void
-    {
-        $this->status_code = $status_code;
-    }
+    private const STATUS_CODES = [
+        200,
+        400,
+        401,
+        404,
+        500
+    ];
 
-    public function create()
+    private static $error_type;
+    private static $status_code;
+    private static $messages;
+    private static $data;
+
+    final function __construct() {}
+    final function __clone() {}
+
+    public function create(string $error_type, array $messages, int $status_code = null, $data = null)
     {
+        $this->setStatusCode($status_code);
+        $this->setErrorType($error_type);
+        $this->setMessages($messages);
+        $this->setData($data);
+
         return [
-            'status_code' => $this->status_code ?? 200,
-            'type' => $this->type,
-            'messages' => $this->messages,
-            'data' => $this->data
+            'status_code' => self::$status_code ?? 200,
+            'type' => self::$error_type,
+            'messages' => self::$messages,
+            'data' => self::$data
         ];
     }
+
+    /**
+     * Set $error_type
+     * @param string $error_type
+     */
+    private function setErrorType(string $error_type): void
+    {
+        if (in_array($error_type, self::ERROR_TYPES)) {
+            self::$error_type = $error_type;
+        } else {
+            self::$error_type = "Undefined";
+        }
+    }
+
+    /**
+     * Set $status_code
+     * @param int $status_code
+     */
+    private function setStatusCode(int $status_code): void
+    {
+        if (!empty($status_code)) {
+            self::$status_code = $status_code;
+        } else {
+            self::$status_code = 200;
+        }
+    }
+
+    /**
+    * Set $messages
+    * @param array $messages
+    */
+    private function setMessages(array $messages): void
+    {
+        if (!empty($messages)) {
+            self::$messages = $messages;
+        } else {
+            self::$messages = [];
+        }
+    }
+
+    /**
+    * Set $data
+    * @param $data
+    */
+    private function setData($data): void
+    {
+        if (!empty($data)) {
+            self::$data = $data;
+        } else {
+            self::$data = null;
+        }
+    }
+
 }
