@@ -3,10 +3,25 @@
 namespace App\Http\Controllers\Api\Invoice;
 
 use App\Http\Controllers\Controller;
+use App\Services\Invoice\ReceivableService;
 use Illuminate\Http\Request;
 
 class ReceivableController extends Controller
 {
+
+    /**
+     * @var ReceivableService
+     */
+    private $service;
+
+    /**
+     * @param ReceivableService $receivableService
+     */
+    public function __construct(ReceivableService $receivableService)
+    {
+        $this->service = $receivableService;
+    }
+
     /**
      * Display a listing of the resource.
      *
