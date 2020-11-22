@@ -15,6 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['provider', 'client']);
             $table->string('name');
             $table->enum('document', ['cpf', 'cnpj'])->nullable();
             $table->string('document_number')->unique()->nullable();

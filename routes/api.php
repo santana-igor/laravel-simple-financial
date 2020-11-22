@@ -27,15 +27,9 @@ Route::group(['namespace' => 'Api', 'prefix' => 'financial'], function () {
     Route::group(['namespace' => 'Category'], function () {
         Route::apiResource('categories', 'InvoiceCategoryController');
     });
-    Route::group(['namespace' => 'Customer'], function () {
-        Route::get('customers', function () {
-            return Customer::all();
-        });
-        Route::post('customers', function () {
-            // DB::table('customers')->insert(
-            //     ['name' => 'Embasa', 'document' => null, 'document_number' => null]
-            // );
-        });
+    Route::group(['namespace' => 'Customer', 'prefix' => 'customer'], function () {
+        Route::apiResource('providers', 'ProviderController');
+        // Route::apiResource('clients', 'ClientController');
     });
     Route::group(['namespace' => 'Invoice', 'prefix' => 'invoice'], function () {
         Route::apiResource('receivable', 'ReceivableController');

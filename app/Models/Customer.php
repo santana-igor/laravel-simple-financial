@@ -15,12 +15,23 @@ class Customer extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'document', 'document_number'
+        'type', 'name', 'document', 'document_number'
     ];
 
     // Relationships
     public function invoices()
     {
         return $this->hasMany(Invoice::class, 'customer_id', 'id');
+    }
+
+    // Scopes
+    public function scopeProviders($query)
+    {
+        return $query->where('type', 'provider');
+    }
+
+    public function scopeClients($query)
+    {
+        return $query->where('type', 'client');
     }
 }
