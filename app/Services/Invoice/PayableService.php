@@ -3,6 +3,7 @@
 namespace App\Services\Invoice;
 
 use App\Abstracts\MasterClassInvoice;
+use App\Helpers\NotificationService;
 use Illuminate\Support\Facades\Validator;
 
 class PayableService extends MasterClassInvoice
@@ -21,16 +22,14 @@ class PayableService extends MasterClassInvoice
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()) {
-            $notification = [
-                'type' => 'error',
-                'message' => $validator->getMessageBag()->all(),
-                'data' => null
-            ];
-
-            return $notification;
+            $notification = new NotificationService();
+            $notification->type('error');
+            $notification->message($validator->getMessageBag()->all());
+            return $notification->create();
         }
 
         try {
+            // Criando nova conta a pagar
             $this->model->checked = false;
             $this->model->type = 'payable';
             $this->model->nickname = $data['nickname'];
@@ -43,21 +42,17 @@ class PayableService extends MasterClassInvoice
             $this->model->expired_at = $data['expired_at'];
             $this->model->save();
 
-            $notification = [
-                'type' => 'success',
-                'message' => ['Cadastro efetuado com sucesso'],
-                'data' => $this->model
-            ];
+            $notification = new NotificationService();
+            $notification->type('success');
+            $notification->message(['Cadastro efetuado com sucesso']);
+            $notification->data($this->model);
+            return $notification->create();
 
-            return $notification;
         } catch (\Exception $e) {
-            $notification = [
-                'type' => 'error',
-                'message' => $e->getMessage(),
-                'data' => null
-            ];
-
-            return $notification;
+            $notification = new NotificationService();
+            $notification->type('error');
+            $notification->message([$e->getMessage()]);
+            return $notification->create();
         }
     }
 
