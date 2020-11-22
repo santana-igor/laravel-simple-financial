@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Api\Category;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\Category\InvoiceCategoryService;
 
-class CategoryController extends Controller
+class InvoiceCategoryController extends Controller
 {
+    private $service;
 
-    public function __construct()
+    /**
+     * @param InvoiceCategoryService $invoiceCategoryService
+     */
+    public function __construct(InvoiceCategoryService $invoiceCategoryService)
     {
-        //
+        $this->service = $invoiceCategoryService;
     }
 
     /**
@@ -20,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Response()->json(Category::all());
     }
 
     /**
@@ -31,7 +37,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = $this->service->store($request->all());
+        return Response()->json($response);
     }
 
     /**

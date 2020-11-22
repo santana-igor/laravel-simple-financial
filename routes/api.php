@@ -25,9 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api', 'prefix' => 'financial'], function () {
     Route::group(['namespace' => 'Category'], function () {
-        Route::get('categories', function () {
-            return Category::all();
-        });
+        Route::apiResource('categories', 'InvoiceCategoryController');
     });
     Route::group(['namespace' => 'Customer'], function () {
         Route::get('customers', function () {
