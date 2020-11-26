@@ -21,10 +21,7 @@ class ProviderService extends MasterClassCustomer
 
         if ($validator->fails()) {
             $notification = new NotificationService();
-            $notification->type('error');
-            $notification->message($validator->getMessageBag()->all());
-            $notification->statusCode(400);
-            return $notification->create();
+            return $notification->create('error', $validator->getMessageBag()->all(), 400);
         }
 
         try {
@@ -36,18 +33,10 @@ class ProviderService extends MasterClassCustomer
             $this->model->save();
 
             $notification = new NotificationService();
-            $notification->type('success');
-            $notification->message(['Cadastro efetuado com sucesso']);
-            $notification->data($this->model);
-            $notification->statusCode(200);
-
-            return $notification->create();
+            return $notification->create('success', ['Cadastro efetuado com sucesso'], 200, $this->model);
         } catch (\Exception $e) {
             $notification = new NotificationService();
-            $notification->type('error');
-            $notification->message([$e->getMessage()]);
-            $notification->statusCode(500);
-            return $notification->create();
+            return $notification->create('error', [$e->getMessage()], 500);
         }
     }
 
