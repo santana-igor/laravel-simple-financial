@@ -44,7 +44,7 @@ class NotificationService
         $this->setData($data);
 
         return [
-            'status_code' => self::$status_code ?? 200,
+            'status_code' => self::$status_code,
             'type' => self::$error_type,
             'messages' => self::$messages,
             'data' => self::$data
