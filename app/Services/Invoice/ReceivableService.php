@@ -10,6 +10,9 @@ class ReceivableService extends MasterClassInvoice
 {
     public function store($data)
     {
+        // Composição da classe Notification para uso em qualquer parte desse método
+        $notification = new NotificationService();
+
         $rules = [
             'type' => 'required',
             'amount' => 'required',
@@ -22,7 +25,6 @@ class ReceivableService extends MasterClassInvoice
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()) {
-            $notification = new NotificationService();
             return $notification->create('error', $validator->getMessageBag()->all(), 400);
         }
 
@@ -40,10 +42,8 @@ class ReceivableService extends MasterClassInvoice
             $this->model->expired_at = $data['expired_at'];
             $this->model->save();
 
-            $notification = new NotificationService();
             return $notification->create('success', ['Cadastro efetuado com sucesso'], 200, $this->model);
         } catch (\Exception $e) {
-            $notification = new NotificationService();
             return $notification->create('error', [$e->getMessage()], 500);
         }
     }

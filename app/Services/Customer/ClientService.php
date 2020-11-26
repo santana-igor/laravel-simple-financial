@@ -10,6 +10,9 @@ class ClientService extends MasterClassCustomer
 {
     public function store($data)
     {
+        // Composição da classe Notification para uso em qualquer parte desse método
+        $notification = new NotificationService();
+
         $rules = [
             'type' => 'required|in:client',
             'name' => 'required',
@@ -20,7 +23,6 @@ class ClientService extends MasterClassCustomer
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()) {
-            $notification = new NotificationService();
             return $notification->create('error', $validator->getMessageBag()->all(), 400);
         }
 
@@ -32,10 +34,8 @@ class ClientService extends MasterClassCustomer
             $this->model->document_number = $data['document_number'] ?? null;
             $this->model->save();
 
-            $notification = new NotificationService();
             return $notification->create('success', ['Cadastro efetuado com sucesso'], 200, $this->model);
         } catch (\Exception $e) {
-            $notification = new NotificationService();
             return $notification->create('error', [$e->getMessage()], 500, $this->model);
         }
     }
