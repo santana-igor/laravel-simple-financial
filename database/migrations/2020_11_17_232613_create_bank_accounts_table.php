@@ -18,7 +18,7 @@ class CreateBankAccountsTable extends Migration
             $table->string('bank_name');
             $table->string('branch');
             $table->string('account')->unique();
-            $table->enum('operation', ['corrente', 'poupança']);
+            $table->enum('operation', ['current', 'savings']);
             $table->integer('balance')->default(0);
             $table->timestamps();
             $table->softDeletes();
