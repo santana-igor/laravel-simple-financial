@@ -38,6 +38,10 @@ Route::group(['namespace' => 'Api', 'prefix' => 'financial'], function () {
         Route::apiResource('payables', 'PayableController');
     });
 
+    Route::group(['namespace' => 'Bank', 'prefix' => 'bank'], function () {
+        Route::apiResource('accounts', 'BankAccountController');
+    });
+
     Route::group(['namespace' => 'Transaction', 'prefix' => 'transaction'], function () {
         Route::apiResource('invoices', 'InvoiceController');
     });
