@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\Category\InvoiceCategoryService;
@@ -35,7 +36,7 @@ class InvoiceCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $response = $this->service->store($request->all());
         return Response()->json($response);

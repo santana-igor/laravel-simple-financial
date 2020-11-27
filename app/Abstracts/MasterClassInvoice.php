@@ -16,6 +16,7 @@ abstract class MasterClassInvoice
         $this->model = $invoice;
     }
 
+    abstract public function all();
     abstract public function store($data);
     abstract public function update();
     abstract public function destroy();

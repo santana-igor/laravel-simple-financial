@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\ClientRequest;
 use App\Models\Customer;
 use App\Services\Customer\ClientService;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     /**
-     * @var ProviderService
+     * @var ClientService
      */
     private $service;
 
@@ -35,7 +36,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
         $response = $this->service->store($request->all());
         return Response()->json($response, $response['status_code']);

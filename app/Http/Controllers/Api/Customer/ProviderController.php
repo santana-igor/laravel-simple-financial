@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\ProviderRequest;
 use App\Models\Customer;
 use App\Services\Customer\ProviderService;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProviderRequest $request)
     {
         $response = $this->service->store($request->all());
         return Response()->json($response, $response['status_code']);

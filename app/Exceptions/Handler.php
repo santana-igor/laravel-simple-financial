@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\NotificationService;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,6 +52,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // Composição da classe Notification para uso em qualquer parte desse método
+            $notification = new NotificationService();
+
+        if ($request->is("api/*")) {
+            if ($exception instanceof ValidationException) {
+                $response = $notification->create('error', [$exception->getMessage()], $exception->status);
+                return Response()->json($response, $response['status_code']);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

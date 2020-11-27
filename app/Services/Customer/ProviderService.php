@@ -13,19 +13,6 @@ class ProviderService extends MasterClassCustomer
         // Composição da classe Notification para uso em qualquer parte desse método
         $notification = new NotificationService();
 
-        $rules = [
-            'type' => 'required|in:provider',
-            'name' => 'required',
-            'document' => 'in:cpf,cnpj|nullable',
-            'document_number' => 'required_if:document,cnpj,cpf|unique:customers,document_number',
-        ];
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            return $notification->create('error', $validator->getMessageBag()->all(), 400);
-        }
-
         try {
             // Criando novo fornecedor
             $this->model->type = $data['type'];

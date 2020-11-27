@@ -30,12 +30,12 @@ class Invoice extends Model
     }
 
     // Scopes
-    public function scopePayable()
+    public function scopePayables()
     {
         //
     }
 
-    public function scopeReceivable()
+    public function scopeReceivables()
     {
         //
     }

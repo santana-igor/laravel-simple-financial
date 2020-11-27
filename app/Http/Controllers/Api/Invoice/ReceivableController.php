@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Invoice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Invoice\InvoiceRequest;
 use App\Services\Invoice\ReceivableService;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class ReceivableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InvoiceRequest $request)
     {
         $response = $this->service->store($request->all());
         return Response()->json($response);

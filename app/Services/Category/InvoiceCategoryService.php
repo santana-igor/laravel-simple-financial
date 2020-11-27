@@ -11,22 +11,12 @@ class InvoiceCategoryService extends MasterClassCategory
     public function store($data)
     {
         // Composição da classe Notification para uso em qualquer parte desse método
-        $notification = new NotificationService();
-
-        $rules = [
-            'name' => 'required',
-        ];
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            return $notification->create('error', $validator->getMessageBag()->all(), 400);
-        }
+            $notification = new NotificationService();
 
         try {
             // Criando nova categoria
-            $this->model->name = $data['name'];
-            $this->model->save();
+                $this->model->name = $data['name'];
+                $this->model->save();
 
             return $notification->create('success', ['Cadastro efetuado com sucesso'], 200, $this->model);
 

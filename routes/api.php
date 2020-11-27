@@ -22,17 +22,23 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 Route::group(['namespace' => 'Api', 'prefix' => 'financial'], function () {
+
     Route::group(['namespace' => 'Category'], function () {
         Route::apiResource('categories', 'InvoiceCategoryController');
     });
+
     Route::group(['namespace' => 'Customer', 'prefix' => 'customer'], function () {
         Route::apiResource('providers', 'ProviderController');
         Route::apiResource('clients', 'ClientController');
     });
+
     Route::group(['namespace' => 'Invoice', 'prefix' => 'invoice'], function () {
-        Route::apiResource('receivable', 'ReceivableController');
-        Route::apiResource('payable', 'PayableController');
+        Route::apiResource('receivables', 'ReceivableController');
+        Route::apiResource('payables', 'PayableController');
+    });
+
+    Route::group(['namespace' => 'Transaction', 'prefix' => 'transaction'], function () {
+        Route::apiResource('invoices', 'InvoiceController');
     });
 });

@@ -1,27 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\Invoice;
+namespace App\Http\Controllers\Api\Transaction;
 
+use App\Helpers\NotificationService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Invoice\InvoiceRequest;
+use App\Http\Requests\Transaction\InvoiceRequest;
 use App\Services\Invoice\PayableService;
 use Illuminate\Http\Request;
 
-class PayableController extends Controller
+class InvoiceController extends Controller
 {
-    /**
-     * @var PayableService
-     */
-    private $service;
-
-    /**
-     * @param PayableService $payableService
-     */
-    public function __construct(PayableService $payableService)
-    {
-        $this->service = $payableService;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -29,8 +17,7 @@ class PayableController extends Controller
      */
     public function index()
     {
-        $response = $this->service->all();
-        return Response()->json($response);
+        //
     }
 
     /**
@@ -39,10 +26,23 @@ class PayableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InvoiceRequest $request)
+    public function store(InvoiceRequest $request, PayableService $payableService)
     {
-        $response = $this->service->store($request->all());
-        return Response()->json($response);
+        // Composição da classe Notification para uso em qualquer parte desse método
+            $notification = new NotificationService();
+
+        switch ($request->type) {
+            case 'transfer':
+                break;
+            case 'payment':
+                    return $payableService->pay($request->all());
+                break;
+            case 'receivement':
+                break;
+            default:
+                return $notification->create('error', ['Tipo de operação inexistente. Verifique os tipos permitidos e tente novamente.'], 422);
+                break;
+        }
     }
 
     /**

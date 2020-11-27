@@ -15,6 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->enum('operation_type', ['transfer', 'payment', 'receivement']);
             $table->integer('amount');
 
             // Relationships

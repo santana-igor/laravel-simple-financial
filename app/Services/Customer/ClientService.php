@@ -13,19 +13,6 @@ class ClientService extends MasterClassCustomer
         // Composição da classe Notification para uso em qualquer parte desse método
         $notification = new NotificationService();
 
-        $rules = [
-            'type' => 'required|in:client',
-            'name' => 'required',
-            'document' => 'in:cpf,cnpj|nullable',
-            'document_number' => 'required_if:document,cnpj,cpf|unique:customers,document_number',
-        ];
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            return $notification->create('error', $validator->getMessageBag()->all(), 400);
-        }
-
         try {
             // Criando novo cliente
             $this->model->type = $data['type'];
@@ -42,11 +29,11 @@ class ClientService extends MasterClassCustomer
 
     public function update()
     {
-
+        //
     }
 
     public function destroy()
     {
-
+        //
     }
 }

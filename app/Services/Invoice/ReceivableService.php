@@ -8,25 +8,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ReceivableService extends MasterClassInvoice
 {
+    public function all()
+    {
+        //
+    }
+
     public function store($data)
     {
         // Composição da classe Notification para uso em qualquer parte desse método
         $notification = new NotificationService();
-
-        $rules = [
-            'type' => 'required',
-            'amount' => 'required',
-            'customer_id' => 'required',
-            'category_id' => 'required',
-            'issued_at' => 'required',
-            'expired_at' => 'required'
-        ];
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            return $notification->create('error', $validator->getMessageBag()->all(), 400);
-        }
 
         try {
             // Criando nova conta a receber
