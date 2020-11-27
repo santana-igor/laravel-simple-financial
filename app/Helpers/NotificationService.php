@@ -25,6 +25,7 @@ class NotificationService
         400,
         401,
         404,
+        422,
         500
     ];
 

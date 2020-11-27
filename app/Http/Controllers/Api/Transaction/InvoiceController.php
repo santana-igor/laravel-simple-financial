@@ -31,7 +31,7 @@ class InvoiceController extends Controller
         // Composição da classe Notification para uso em qualquer parte desse método
             $notification = new NotificationService();
 
-        switch ($request->type) {
+        switch ($request->operation_type) {
             case 'transfer':
                 break;
             case 'payment':

@@ -66,6 +66,7 @@ class PayableService extends MasterClassInvoice
                 try {
                     // Criando nova transação
                         $transaction = new Transaction();
+                        $transaction->operation_type = $data['operation_type'];
                         $transaction->amount = $data['amount'];
                         $transaction->invoice_id = $data['invoice_id'];
                         $transaction->bank_account_id = $data['bank_account_id'];

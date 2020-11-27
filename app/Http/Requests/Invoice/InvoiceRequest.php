@@ -24,7 +24,6 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:payable,receivable',
             'amount' => 'required',
             'customer_id' => 'required|exists:customers,id',
             'category_id' => 'required|exists:categories,id',
